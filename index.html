@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>NequiBotGV - Generador</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <link href="https://fonts.googleapis.com/css2?family=Inter  :wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
@@ -12,8 +12,8 @@
     body {
       margin: 0;
       padding: 0;
-      background: #000;
-      font-family: 'Inter', sans-serif;
+      background: #000;   
+      font-family: 'Fira Sans', sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -48,7 +48,7 @@
       font-size: 16px;
       background: #222;
       color: #fff;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Fira Sans', sans-serif;
     }
     .boton {
       margin-top: 10px;
@@ -57,7 +57,7 @@
       font-size: 16px;
       border: none;
       border-radius: 12px;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Fira Sans', sans-serif;
       font-weight: 700;
       cursor: pointer;
       transition: all 0.4s ease;
@@ -91,8 +91,8 @@
       font-size: 16px;
       color: #2E1A47;
       font-weight: 400;
-      text-align: left; /* Alineado a la izquierda */
-      font-family: 'Inter', sans-serif;
+      text-align: left;
+      font-family: 'Fira Sans', sans-serif;
       outline: none;
       pointer-events: none;
       white-space: nowrap;
@@ -106,12 +106,12 @@
       width: calc(160px * var(--escala)); 
     }
     #valor { 
-      top: calc((449.48px + 12px) * var(--escala)); /* Bajado 12 píxeles en total */
+      top: calc((449.48px + 12px) * var(--escala)); 
       left: calc((17px + 20px) * var(--escala)); 
       width: calc(160px * var(--escala)); 
     }
     #nequi { 
-      top: calc((449.48px + 57px) * var(--escala)); /* Bajado 57 píxeles en total */
+      top: calc((449.48px + 57px) * var(--escala)); 
       left: calc((17px + 20px) * var(--escala)); 
       width: calc(160px * var(--escala)); 
     }
@@ -124,7 +124,7 @@
       text-overflow: ellipsis; 
     }
     #referencia { 
-      top: calc((540.26px + 58px + 2px) * var(--escala)); /* Bajado 2 píxeles adicionales */
+      top: calc((540.26px + 58px + 2px) * var(--escala)); 
       left: calc((17px + 20px) * var(--escala)); 
       width: calc(160px * var(--escala)); 
     }
@@ -141,9 +141,32 @@
       color: #fff;
       border: none;
       border-radius: 12px;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Fira Sans', sans-serif;
       font-weight: bold;
       z-index: 9999;
+    }
+    /* Mensaje de carga */
+    .mensaje-carga {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      color: #fff;
+      font-family: 'Fira Sans', sans-serif;
+      z-index: 9999;
+      visibility: hidden;
+      opacity: 0;
+      transition: visibility 0s, opacity 0.5s;
+    }
+    .mensaje-carga.mostrar {
+      visibility: visible;
+      opacity: 1;
     }
   </style>
 </head>
@@ -177,13 +200,20 @@
   <input type="text" id="referencia" class="input-overlay" readonly>
 </div>
 <button id="verPantallaCompleta">Ver en Pantalla Completa</button>
-<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js  "></script>
+<!-- Mensaje de carga -->
+<div class="mensaje-carga" id="mensaje-carga">
+  <pre>
+    Cargando comprobante...
+    Espere 5 segundos.
+  </pre>
+</div>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>   
 <script>
-let claveAcceso = "2025142205";
+let claveAcceso = "2025";
 const claveAdmin = "1395";
 // Eventos principales
 document.getElementById('whatsapp').addEventListener('click', () => {
-  window.open('https://wa.me/573178793834?text=Hola%2C%20me%20gustar%C3%ADa%20obtener%20la%20clave%20de%20NequiBotGV.  ', '_blank');
+  window.open('https://wa.me/573178793834?text=Hola%2C%20me%20gustar%C3%ADa%20obtener%20la%20clave%20de%20NequiBotGV.', '_blank');
 });
 document.getElementById('clave-ingreso').addEventListener('click', () => {
   const clave = prompt("Ingrese la clave de acceso:");
@@ -222,7 +252,7 @@ document.getElementById('guardar-nueva-clave').addEventListener('click', () => {
 document.getElementById('generar').addEventListener('click', () => {
   if (!validarEntradas()) return;
   const container = document.getElementById('captura');
-  const img = document.querySelector('#captura img');
+  const img = document.querySelector('#captura img');   
   // Ajustar escala según el tamaño de la pantalla
   const escala = Math.min(window.innerWidth / 390, 1);
   container.style.setProperty('--escala', escala);
@@ -242,13 +272,15 @@ document.getElementById('generar').addEventListener('click', () => {
   }
   // Mostrar el botón de pantalla completa
   document.getElementById('verPantallaCompleta').style.display = 'block';
-  // Descargar automáticamente el comprobante
-  descargarComprobante(formato);
+  // Descargar automáticamente el comprobante después de 5 segundos
+  setTimeout(() => descargarComprobante(formato), 5000);
 });
 document.getElementById('verPantallaCompleta').addEventListener('click', () => {
   const contenedor = document.getElementById('captura');
   const btn = document.getElementById('verPantallaCompleta');
+  const mensajeCarga = document.getElementById('mensaje-carga');
   if (!document.fullscreenElement) {
+    // Activar pantalla completa
     if (contenedor.requestFullscreen) {
       contenedor.requestFullscreen();
     } else if (contenedor.webkitRequestFullscreen) {
@@ -256,10 +288,15 @@ document.getElementById('verPantallaCompleta').addEventListener('click', () => {
     } else if (contenedor.msRequestFullscreen) {
       contenedor.msRequestFullscreen();
     }
-    const escala = Math.min(window.innerWidth / 390, 1);
-    contenedor.style.transform = `scale(${1 / escala})`;
+    // Mostrar mensaje de carga
+    mensajeCarga.classList.add('mostrar');
+    // Ocultar mensaje y permitir salir de pantalla completa
+    setTimeout(() => {
+      mensajeCarga.classList.remove('mostrar');
+    }, 5000);
     btn.textContent = "Salir de Pantalla Completa";
   } else {
+    // Salir de pantalla completa
     if (document.exitFullscreen) {
       document.exitFullscreen();
     } else if (document.webkitExitFullscreen) {
@@ -269,14 +306,7 @@ document.getElementById('verPantallaCompleta').addEventListener('click', () => {
     }
     contenedor.style.transform = 'scale(1)';
     btn.textContent = "Ver en Pantalla Completa";
-  }
-});
-document.addEventListener('fullscreenchange', () => {
-  const contenedor = document.getElementById('captura');
-  const btn = document.getElementById('verPantallaCompleta');
-  if (!document.fullscreenElement) {
-    contenedor.style.transform = 'scale(1)';
-    btn.textContent = "Ver en Pantalla Completa";
+    mensajeCarga.classList.remove('mostrar');
   }
 });
 // Validaciones y utilidades
@@ -322,7 +352,7 @@ function descargarComprobante(formato) {
     return;
   }
   html2canvas(document.getElementById('captura'), {
-    scale: 2,
+    scale: 4,
     logging: false,
     useCORS: true,
     allowTaint: false,
