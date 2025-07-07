@@ -1,3 +1,4 @@
+<!-- Coloca este código completo en tu archivo HTML -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,13 +7,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       padding: 0;
-      background: #000;   
+      background: #000;
       font-family: 'Manrope', sans-serif;
       display: flex;
       justify-content: center;
@@ -68,22 +67,24 @@
     .boton-clave { background: linear-gradient(90deg, #cc0000, #ff1744); }
     .boton-cambiar { background: linear-gradient(90deg, #6a1b9a, #8e24aa); }
     .boton-descargar { background: linear-gradient(90deg, #1976d2, #2196f3); }
+
     .container {
       position: relative;
       width: 100%;
       max-width: 390px;
       margin: 20px auto;
       background: #fff;
-      border-radius: 0px;
-      overflow: hidden;
+      overflow: visible;
       display: none;
       transform-origin: top left;
       transform: scale(1);
     }
+
     .container img {
       width: 100%;
       display: block;
     }
+
     .input-overlay {
       position: absolute;
       background: transparent;
@@ -95,40 +96,37 @@
       font-family: 'Manrope', sans-serif;
       outline: none;
       pointer-events: none;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      line-height: 1.4;
+      padding-bottom: 3px;
+      padding-top: 1px;
+      height: auto;
     }
-    /* Posiciones relativas sobre imagen de 390px de ancho */
-    #nombre { 
-      top: calc(412.26px * var(--escala)); 
-      left: calc((17px + 20px) * var(--escala)); 
-      width: calc(160px * var(--escala)); 
+
+    /* Campo nombre ajustado para que no corte letras como "g", "y", "p" */
+    #nombre {
+      top: calc(412.26px * var(--escala));
+      left: calc((17px + 20px) * var(--escala));
+      line-height: 1.6;
+      padding-bottom: 5px;
     }
-    #valor { 
-      top: calc((449.48px + 12px) * var(--escala)); 
-      left: calc((17px + 20px) * var(--escala)); 
-      width: calc(160px * var(--escala)); 
+    #valor {
+      top: calc((449.48px + 12px) * var(--escala));
+      left: calc((17px + 20px) * var(--escala));
     }
-    #nequi { 
-      top: calc((449.48px + 57px) * var(--escala)); 
-      left: calc((17px + 20px) * var(--escala)); 
-      width: calc(160px * var(--escala)); 
+    #nequi {
+      top: calc((449.48px + 57px) * var(--escala));
+      left: calc((17px + 20px) * var(--escala));
     }
-    #fecha { 
-      top: calc((540.26px + 15px) * var(--escala)); 
-      left: calc((17px + 20px) * var(--escala)); 
-      width: calc(280px * var(--escala)); 
-      white-space: nowrap; 
-      overflow: hidden; 
-      text-overflow: ellipsis; 
+    #fecha {
+      top: calc((555px) * var(--escala));
+      left: calc((39px) * var(--escala));
+      white-space: normal;
     }
-    #referencia { 
-      top: calc((540.26px + 58px + 2px) * var(--escala)); 
-      left: calc((17px + 20px) * var(--escala)); 
-      width: calc(160px * var(--escala)); 
+    #referencia {
+      top: calc((540.26px + 58px + 2px) * var(--escala));
+      left: calc((17px + 20px) * var(--escala));
     }
-    /* Botón de pantalla completa */
+
     #verPantallaCompleta {
       display: none;
       position: fixed;
@@ -145,7 +143,7 @@
       font-weight: bold;
       z-index: 9999;
     }
-    /* Mensaje de carga */
+
     .mensaje-carga {
       position: fixed;
       top: 0;
@@ -164,6 +162,7 @@
       opacity: 0;
       transition: visibility 0s, opacity 0.5s;
     }
+
     .mensaje-carga.mostrar {
       visibility: visible;
       opacity: 1;
@@ -171,6 +170,8 @@
   </style>
 </head>
 <body>
+
+<!-- FORMULARIO -->
 <div class="formulario" id="pantalla">
   <div class="titulo">NequiBotGV</div>
   <button id="whatsapp" class="boton boton-whatsapp">¿No tienes clave? Contáctanos</button>
@@ -191,6 +192,8 @@
     </div>
   </div>
 </div>
+
+<!-- COMPROBANTE -->
 <div class="container" id="captura">
   <img src="comprobante_base.png" alt="Fondo" id="imagen-fondo">
   <input type="text" id="nombre" class="input-overlay" readonly>
@@ -199,7 +202,9 @@
   <div id="fecha" class="input-overlay"></div>
   <input type="text" id="referencia" class="input-overlay" readonly>
 </div>
+
 <button id="verPantallaCompleta">Ver en Pantalla Completa</button>
+
 <!-- Mensaje de carga -->
 <div class="mensaje-carga" id="mensaje-carga">
   <pre>
@@ -207,14 +212,16 @@
     Espere 5 segundos.
   </pre>
 </div>
-<script src=" https://html2canvas.hertzen.com/dist/html2canvas.min.js "></script>   
+
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script>
 let claveAcceso = "32097221381";
 const claveAdmin = "1395";
-// Eventos principales
+
 document.getElementById('whatsapp').addEventListener('click', () => {
   window.open('https://wa.me/573178793834?text=Hola%2C%20me%20gustar%C3%ADa%20obtener%20la%20clave%20de%20NequiBotGV.', '_blank');
 });
+
 document.getElementById('clave-ingreso').addEventListener('click', () => {
   const clave = prompt("Ingrese la clave de acceso:");
   if (clave === claveAdmin) {
@@ -226,6 +233,7 @@ document.getElementById('clave-ingreso').addEventListener('click', () => {
     alert("Clave incorrecta. Acceso denegado.");
   }
 });
+
 document.getElementById('cambiar-clave-boton').addEventListener('click', () => {
   const clave = prompt("Ingrese la clave de administrador:");
   if (clave === claveAdmin) {
@@ -235,12 +243,14 @@ document.getElementById('cambiar-clave-boton').addEventListener('click', () => {
     alert("Clave de administrador incorrecta.");
   }
 });
+
 function mostrarFormulario() {
   document.getElementById('contenido-oculto').style.display = 'block';
   document.getElementById('whatsapp').style.display = 'none';
   document.getElementById('clave-ingreso').style.display = 'none';
   document.getElementById('cambiar-clave-boton').style.display = 'none';
 }
+
 document.getElementById('guardar-nueva-clave').addEventListener('click', () => {
   const nueva = document.getElementById('nueva-clave').value.trim();
   if (nueva) {
@@ -249,67 +259,50 @@ document.getElementById('guardar-nueva-clave').addEventListener('click', () => {
     document.getElementById('nueva-clave').value = "";
   }
 });
+
 document.getElementById('generar').addEventListener('click', () => {
   if (!validarEntradas()) return;
   const container = document.getElementById('captura');
-  const img = document.querySelector('#captura img');   
-  // Ajustar escala según el tamaño de la pantalla
+  const img = document.querySelector('#captura img');
   const escala = Math.min(window.innerWidth / 390, 1);
   container.style.setProperty('--escala', escala);
   document.getElementById('pantalla').style.display = 'none';
   container.style.display = 'block';
-  // Asignar valores a los campos superpuestos
   document.getElementById('nombre').value = document.getElementById('input-nombre').value;
   document.getElementById('valor').value = formatValor(document.getElementById('input-valor').value);
   document.getElementById('nequi').value = document.getElementById('input-nequi').value;
   generarFecha();
   generarReferencia();
   const formato = document.getElementById('formato').value;
-  // Verificar si la imagen de fondo está completamente cargada
+
   if (!img.complete || !img.naturalWidth) {
     alert("La imagen de fondo no se ha cargado completamente. Inténtalo nuevamente.");
     return;
   }
-  // Mostrar el botón de pantalla completa
+
   document.getElementById('verPantallaCompleta').style.display = 'block';
-  // Descargar automáticamente el comprobante después de 5 segundos
-  setTimeout(() => descargarComprobante(formato), 5000);
+
+  setTimeout(() => {
+    descargarComprobante(formato);
+  }, 5200);
 });
+
 document.getElementById('verPantallaCompleta').addEventListener('click', () => {
   const contenedor = document.getElementById('captura');
   const btn = document.getElementById('verPantallaCompleta');
   const mensajeCarga = document.getElementById('mensaje-carga');
   if (!document.fullscreenElement) {
-    // Activar pantalla completa
-    if (contenedor.requestFullscreen) {
-      contenedor.requestFullscreen();
-    } else if (contenedor.webkitRequestFullscreen) {
-      contenedor.webkitRequestFullscreen();
-    } else if (contenedor.msRequestFullscreen) {
-      contenedor.msRequestFullscreen();
-    }
-    // Mostrar mensaje de carga
+    contenedor.requestFullscreen?.();
     mensajeCarga.classList.add('mostrar');
-    // Ocultar mensaje y permitir salir de pantalla completa
-    setTimeout(() => {
-      mensajeCarga.classList.remove('mostrar');
-    }, 5000);
+    setTimeout(() => mensajeCarga.classList.remove('mostrar'), 5000);
     btn.textContent = "Salir de Pantalla Completa";
   } else {
-    // Salir de pantalla completa
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    } else if (document.webkitExitFullscreen) {
-      document.webkitExitFullscreen();
-    } else if (document.msExitFullscreen) {
-      document.msExitFullscreen();
-    }
-    contenedor.style.transform = 'scale(1)';
+    document.exitFullscreen?.();
     btn.textContent = "Ver en Pantalla Completa";
     mensajeCarga.classList.remove('mostrar');
   }
 });
-// Validaciones y utilidades
+
 function validarEntradas() {
   const nombre = document.getElementById('input-nombre').value.trim();
   const valor = document.getElementById('input-valor').value.trim();
@@ -328,50 +321,45 @@ function validarEntradas() {
   }
   return true;
 }
+
 function generarFecha() {
   const fecha = new Date();
-  const opts = { year: 'numeric', month: 'long', day: 'numeric' };
-  const f = fecha.toLocaleDateString('es-ES', opts);
+  const meses = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+  const dia = fecha.getDate().toString().padStart(2, '0');
+  const mes = meses[fecha.getMonth()];
+  const anio = fecha.getFullYear();
   let h = fecha.getHours(), m = fecha.getMinutes().toString().padStart(2, '0'),
       ampm = h >= 12 ? 'p. m.' : 'a. m.';
   h = h % 12 || 12;
-  document.getElementById('fecha').innerHTML = `${f} a las ${h}:${m} ${ampm}`;
+  document.getElementById('fecha').innerHTML = `${dia} de ${mes} de ${anio} a las ${h}:${m} ${ampm}`;
 }
+
 function generarReferencia() {
   document.getElementById('referencia').value = 'M' + Math.floor(1e7 + Math.random() * 9e7);
 }
+
 function formatValor(valor) {
   valor = valor.replace(/\D/g, '');
   if (!valor) return "$ 0,00";
   return `$ ${valor.replace(/\B(?=(\d{3})+(?!\d))/g, '.')},00`;
 }
+
 function descargarComprobante(formato) {
-  const img = document.querySelector('#captura img');
-  if (!img.complete || !img.naturalWidth) {
-    alert("La imagen de fondo no se ha cargado completamente. Inténtalo nuevamente.");
-    return;
-  }
   html2canvas(document.getElementById('captura'), {
     scale: 4,
-    logging: false,
-    useCORS: true,
-    allowTaint: false,
-    scrollY: -window.scrollY,
-    scrollX: -window.scrollX
+    useCORS: true
   }).then(canvas => {
-    try {
-      const link = document.createElement('a');
-      link.href = canvas.toDataURL(`image/${formato}`);
-      link.download = `comprobante.${formato}`;
-      if (navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
-        window.open(link.href, '_blank');
-      } else {
-        link.click();
-      }
-    } catch (error) {
-      console.error("Error al descargar el comprobante:", error);
-      alert("Ocurrió un error al generar el comprobante. Inténtalo nuevamente.");
+    const link = document.createElement('a');
+    link.href = canvas.toDataURL(`image/${formato}`);
+    link.download = `comprobante.${formato}`;
+    if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+      window.open(link.href, '_blank');
+    } else {
+      link.click();
     }
+  }).catch(err => {
+    console.error("Error al generar imagen:", err);
+    alert("Ocurrió un error al generar el comprobante.");
   });
 }
 </script>
